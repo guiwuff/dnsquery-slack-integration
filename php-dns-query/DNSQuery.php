@@ -7,8 +7,20 @@
         var $returnmsg = null;
         
         // construct object menggunakan subcommand
-        function __construct($text) {		
-			$this->text = strtolower($text);           
+        function __construct($text) {	
+
+            $this->text = strtolower($text);            
+            $this->split_text();
+            
+            switch ($this->subcommand) {
+                case 'whois':
+                    $this->do_whois();
+                    break;
+                
+                default:
+                    # code...
+                    break;
+            }	           
 		}		
  
         // set subcommand yang ingin diproses
@@ -19,6 +31,14 @@
 
         function get_text(){
             return $this->text;
+        }
+
+        function get_returnmsg(){
+            return $this->returnmsg;
+        }
+
+        function get_commandstatus(){
+            return $this->commandstatus;
         }
 
         function split_text(){
@@ -81,7 +101,11 @@
             }
 
             $this->commandstatus = 1;
-            $this->returnmsg = $whois;
+            $this->returnmsg = json_encode(array(
+                "content-type"  =>  "application/json",
+                "title" => "Whois Record ".$this->param,
+                "text" => $whois
+            ),JSON_UNESCAPED_SLASHES);
 
 
             // Close the Socket Connection
@@ -89,15 +113,7 @@
         }
 
         function process(){
-            switch ($this->subcommand) {
-                case 'whois':
-                    do_whois();
-                    break;
-                
-                default:
-                    # code...
-                    break;
-            }	
+  
 
         }
 

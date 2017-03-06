@@ -24,12 +24,13 @@ $command = $_POST['command'];
 $subcommand = $_POST['text'];
 
 $dns = new DNSQuery($subcommand);
-$dns->process();
 
-if ($dns->commandstatus == 0) {
-    die($dns->returnmsg);
-    echo $dns->returnmsg;
+if ($dns->get_commandstatus() == 0) {
+    die($dns->get_returnmsg());
+    echo $dns->get_returnmsg();
 }else{
-    echo $dns->returnmsg;
+    echo $dns->get_returnmsg();
 }
+
+
 ?>
