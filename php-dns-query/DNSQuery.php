@@ -101,11 +101,7 @@
             }
 
             $this->commandstatus = 1;
-            $this->returnmsg = json_encode(array(
-                "content-type"  =>  "application/json",
-                "title" => "Whois Record ".$this->param,
-                "text" => $whois
-            ),JSON_UNESCAPED_SLASHES);
+            $this->returnmsg = $whois;
 
 
             // Close the Socket Connection
